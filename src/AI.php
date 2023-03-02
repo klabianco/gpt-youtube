@@ -132,8 +132,6 @@ class AI
             $uimIds[] = $currentUIMIds[$name];
         }
 
-        //print_r($uimIds);
-
         if (count($uimIds) > 0) return $uimIds;
         return false;
     }
@@ -143,16 +141,19 @@ class AI
         if ($this->hasPrompt()) {
             $openAIKey = $_SERVER['OPENAI_API_KEY'];
 
-            $url = "https://api.openai.com/v1/completions";
+            $url = "https://api.openai.com/v1/chat/completions";
             $maxTokens = 500;
 
             $curl = new Curl();
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
             $curl->setHeader('Content-Type', 'application/json');
             $curl->setHeader('Authorization', 'Bearer ' . $openAIKey);
 
+            $msgs = [['role' => 'user', 'content' => $this->getPrompt()]];
+
             $curl->post($url, [
                 'model' => 'gpt-3.5-turbo',
-                'prompt' => $this->getPrompt(),
+                'messages' => $msgs,
                 'temperature' =>  0.7,
                 'max_tokens' => $maxTokens,
                 'top_p' => 1,
@@ -164,7 +165,7 @@ class AI
                 echo 'Error: ' . $curl->errorMessage . "\n";
                 $curl->diagnose();
             } else { // returns only the text from the first choice - there may be many choices...
-                return trim($curl->response->choices[0]->text);
+                return trim($curl->response->choices[0]->message->content);
             }
         } else return false;
     }
