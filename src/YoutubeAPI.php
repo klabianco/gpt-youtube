@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class YoutubeAPI
 {
@@ -13,17 +13,29 @@ class YoutubeAPI
         $this->_method = "search";
     }
 
+    public function getDescriptionTextFromVideoId()
+    {
+        $this->_method = "videos";
+        $json = $this->getYoutubeJson();
+
+        $details = json_decode($json);
+
+        $description = $details->items[0]->snippet->description;
+
+        return $description;
+    }
+
     public function getYoutubeJson()
     {
-        $url = "https://youtube.googleapis.com/youtube/v3/".$this->_method."?key=".$this->_key."&part=snippet";
-        
-        if($this->_method == "search"){
-        $url .= "&channelId=" . $this->_channelId . "&maxResults=" . $this->_resultsPerPage . "&key=" . $this->_key
-            . "&order=viewCount"
-            . "&type=video";
+        $url = "https://youtube.googleapis.com/youtube/v3/" . $this->_method . "?key=" . $this->_key . "&part=snippet";
+
+        if ($this->_method == "search") {
+            $url .= "&channelId=" . $this->_channelId . "&maxResults=" . $this->_resultsPerPage . "&key=" . $this->_key
+                . "&order=viewCount"
+                . "&type=video";
         }
 
-        if($this->_videoId != ''){
+        if ($this->_videoId != '') {
             $url .= "&id=" . $this->_videoId;
         }
         if ($this->_query != "") $url .= "&q=" . $this->_query;
