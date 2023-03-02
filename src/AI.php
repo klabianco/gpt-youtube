@@ -142,6 +142,7 @@ class AI
     {
         if ($this->hasPrompt()) {
             $openAIKey = $_SERVER['OPENAI_API_KEY'];
+
             $url = "https://api.openai.com/v1/completions";
             $maxTokens = 500;
 
@@ -150,7 +151,7 @@ class AI
             $curl->setHeader('Authorization', 'Bearer ' . $openAIKey);
 
             $curl->post($url, [
-                'model' => 'text-davinci-003',
+                'model' => 'gpt-3.5-turbo',
                 'prompt' => $this->getPrompt(),
                 'temperature' =>  0.7,
                 'max_tokens' => $maxTokens,

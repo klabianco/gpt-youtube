@@ -16,3 +16,6 @@ $json = $Youtube->getYoutubeJson();
 $details = json_decode($json);
 
 $description = $details->items[0]->snippet->description;
+
+$AI->setPrompt("asdfas");
+$AI->getResponseFromOpenAi();
