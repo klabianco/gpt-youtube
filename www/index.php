@@ -54,13 +54,9 @@ if ($request[1] == "api") {
         $method = $request[3];
 
         if ($method == "getItinerary") {
-            $destination = $_POST['destination'];
-            $days = $_POST['days'];
+            $prompt = $_POST['prompt'];
 
             $response['valid'] = true;
-            $promptEng = 'Return the result of the following question as HTML ordered list code starting with the itinerary tags and not the html tags for only the itinerary itself with no GPT introduction.  For example, day 1 should be formatted like the following:  "<li>Day 1: Start your day with a visit to the Irvine Museum to explore their collection of California Impressionism art. Then, head over to the San Joaquin Wildlife Sanctuary for a peaceful nature walk.</li>".  Here is the question: ';
-
-            $prompt = $promptEng . "What is the best itinerary is for the destination of " . $destination . " in " . $days . " days?";
 
             $AI->setPrompt($prompt);
             $response['message'] = $AI->getResponseFromOpenAi();
