@@ -154,7 +154,7 @@ class AI
             $curl->post($url, [
                 'model' => 'gpt-3.5-turbo',
                 'messages' => $msgs,
-                'temperature' =>  0.7,
+                'temperature' =>  1,
                 'max_tokens' => $maxTokens,
                 'top_p' => 1,
                 'frequency_penalty' => 0,
