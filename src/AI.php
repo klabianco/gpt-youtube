@@ -142,7 +142,7 @@ class AI
             $openAIKey = $_SERVER['OPENAI_API_KEY'];
 
             $url = "https://api.openai.com/v1/chat/completions";
-            $maxTokens = 500;
+            $maxTokens = 1000;
 
             $curl = new Curl();
             $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
