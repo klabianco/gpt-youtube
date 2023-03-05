@@ -146,6 +146,8 @@ class AI
 
             $curl = new Curl();
             $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setopt(CURLOPT_TIMEOUT, 60);
+            
             $curl->setHeader('Content-Type', 'application/json');
             $curl->setHeader('Authorization', 'Bearer ' . $openAIKey);
 
