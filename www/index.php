@@ -6,7 +6,7 @@ $http_origin = $_SERVER['HTTP_ORIGIN'];
 $allowed_domains = array(
   'https://plantrip.io',
   'http://localitineraries.o9p.net',
-  'http://webpage.o9p.net',
+  'https://webpage.o9p.net',
   'http://localwebpage.o9p.net'
 );
 
