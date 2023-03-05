@@ -1,10 +1,22 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
-header('Access-Control-Allow-Origin: *');
+
+$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+$allowed_domains = array(
+  'https://plantrip.io',
+  'http://localitineraries.o9p.net',
+  'http://webpage.o9p.net',
+  'http://localwebpage.o9p.net'
+);
+
+if (in_array($http_origin, $allowed_domains))
+{  
+    header("Access-Control-Allow-Origin: $http_origin");
+}
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../..");
 $dotenv->load();
-
 
 $request = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -61,6 +73,15 @@ if ($request[1] == "api") {
             $AI->setPrompt($prompt);
             $response['message'] = $AI->getResponseFromOpenAi();
         }
+    } else if ($request[2] == "webpage") {
+        $prompt = $_POST['prompt'];
+
+        $AI->setPrompt($prompt);
+        $response = $AI->getResponseFromOpenAi();
+
+        echo $response;
+
+        exit();
     }
 
     echo json_encode($response);
